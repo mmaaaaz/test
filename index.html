@@ -1,50 +1,39 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Current Date and Time</title>
-  <script>
-    function updateDateTime() {
-      var now = new Date();
-      var day = now.getDate();
-      var month = now.getMonth() + 1; // January is 0
-      var year = now.getFullYear();
-      var hours = now.getHours();
-      var minutes = now.getMinutes();
-      var seconds = now.getSeconds();
-      var ampm = hours >= 12 ? 'pm' : 'am';
-
-      // Format day, month, and year as two digits
-      day = day < 10 ? '0' + day : day;
-      month = month < 10 ? '0' + month : month;
-      year = year % 100; // Get last two digits of the year
-
-      // Convert hours to 12-hour format
-      hours = hours % 12;
-      hours = hours ? hours : 12; // "0" should be "12"
-
-      // Format hours, minutes, and seconds as two digits
-      hours = hours < 10 ? '0' + hours : hours;
-      minutes = minutes < 10 ? '0' + minutes : minutes;
-      seconds = seconds < 10 ? '0' + seconds : seconds;
-
-      var dateTimeString = day + '-' + month + '-' + year + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
-
-      document.getElementById('datetime').textContent = dateTimeString;
-    }
-
-    // Update date and time every second
-    setInterval(updateDateTime, 1000);
-  </script>
-  <style>
-    body {
+  <head>
+    <title>Current Date and Time</title>
+    <script>
+      function updateDateTime() {
+        const now = new Date();
+        const day = now.getDate().toString().padStart(2, '0');
+        const month = (now.getMonth() + 1).toString().padStart(2, '0'); // January is 0
+        const year = (now.getFullYear() % 100).toString().padStart(2, '0');
+        let hours = now.getHours();
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const ampm = hours >= 12 ? 'pm' : 'am';
+      
+        hours %= 12;
+        hours = hours ? hours : 12; // "0" should be "12"
+        hours = hours.toString().padStart(2, '0');
+      
+        const dateTimeString = `${day}-${month}-${year} ${hours}:${minutes}:${seconds} ${ampm}`;
+      
+        document.getElementById('datetime').textContent = dateTimeString;
+      }
+      
+      setInterval(updateDateTime, 1000);
+    </script>
+    <style>
+      body {
       font-family: Arial, sans-serif;
       text-align: center;
       margin-top: 100px;
       font-size: 24px;
-    }
-  </style>
-</head>
-<body>
-  <div id="datetime"></div>
-</body>
+      }
+    </style>
+  </head>
+  <body>
+    <div id="datetime"></div>
+  </body>
 </html>
